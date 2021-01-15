@@ -19,3 +19,4 @@ tslint.*
 lcov.info
 logo.svg
 CHANGELOG.MD
+.idea

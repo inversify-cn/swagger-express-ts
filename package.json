@@ -1,10 +1,13 @@
 {
-    "name": "swagger-express-ts",
-    "version": "1.0.1",
+    "name": "@inversify-cn/swagger-express-ts",
+    "publishConfig": {
+        "access": "public"
+    },
+    "version": "1.0.4",
     "description": "Generate and serve swagger.json",
-    "main": "index.js",
-    "types": "index.d.ts",
-    "typings": "index.d.ts",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "typings": "dist/index.d.ts",
     "scripts": {
         "build:lib": "echo \"Building lib...\" && gulp build:lib",
         "build": "echo \"Building...\" && gulp build",
@@ -12,7 +15,7 @@
         "test": "echo \"Testing...\" && npm run build && nyc mocha",
         "dev": "echo \"Developing...\" && nodemon",
         "start": "echo \"Starting...\" && npm run build && ts-node --project tsconfig.json src/index.ts",
-        "publish": "npm publish dist/swagger-express-ts",
+        "publish": "npm publish dist",
         "prepare": "npm run build:lib"
     },
     "repository": {

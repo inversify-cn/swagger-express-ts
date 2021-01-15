@@ -1,6 +1,9 @@
 {
-    "name": "swagger-express-ts",
-    "version": "1.0.1",
+    "name": "@inversify-cn/swagger-express-ts",
+    "publishConfig": {
+        "access": "public"
+    },
+    "version": "1.0.4",
     "description": "Generate and serve swagger.json",
     "main": "index.js",
     "types": "index.d.ts",
