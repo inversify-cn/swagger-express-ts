@@ -15,7 +15,7 @@ import {
     ApiOperationPost,
     SwaggerDefinitionConstant,
     ApiOperationPut,
-} from 'swagger-express-ts';
+} from '@inversify-cn/swagger-express-ts';
 import { CarsService } from './cars.service';
 import { CarModel } from './car.model';
 

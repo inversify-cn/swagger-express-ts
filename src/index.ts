@@ -8,9 +8,10 @@ import {
     TYPE,
 } from 'inversify-express-utils';
 import { CarsController } from './cars/cars.controller';
-import * as swagger from 'swagger-express-ts';
-import { SwaggerDefinitionConstant } from 'swagger-express-ts';
-const config = require('../config.json');
+import * as swagger from '@inversify-cn/swagger-express-ts';
+// tslint:disable-next-line:no-duplicate-imports
+import { SwaggerDefinitionConstant } from '@inversify-cn/swagger-express-ts';
+const config = require('../config.template.json');
 import { CarController } from './cars/car.controller';
 import { CarBulkController } from './cars/carbulk.controller';
 import { CarsService } from './cars/cars.service';

@@ -7,7 +7,7 @@ const tslint = require('gulp-tslint');
 const path = {
     src: 'src/**/*.ts',
     dist: 'dist',
-    module: 'node_modules/swagger-express-ts',
+    module: 'node_modules/@inversify-cn/swagger-express-ts',
     lib: {
         src: 'lib/swagger-express-ts-lib/src/**/*.ts',
     },

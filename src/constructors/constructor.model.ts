@@ -2,7 +2,7 @@ import {
     ApiModel,
     ApiModelProperty,
     SwaggerDefinitionConstant,
-} from 'swagger-express-ts';
+} from '@inversify-cn/swagger-express-ts';
 
 @ApiModel({
     description: 'Description Constructor.',

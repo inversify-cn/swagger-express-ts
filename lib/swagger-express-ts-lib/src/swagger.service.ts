@@ -243,7 +243,10 @@ export class SwaggerService {
     ): void {
         assert.ok(args, 'Args are required.');
         assert.ok(args.parameters, 'Parameters are required.');
-        assert.ok(!args.parameters.body, 'Parameter body is not required.');
+        if(args.parameters.body){
+          console.warn("Parameter body is not recommended to use.")
+        }
+        // assert.ok(!args.parameters.body, 'Parameter body is not required.');
         assert.ok(args.responses, 'Responses are required.');
         this.addOperation('delete', args, target, propertyKey);
     }

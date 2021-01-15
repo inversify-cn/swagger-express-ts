@@ -1,7 +1,7 @@
 import { injectable, inject } from 'inversify';
 import 'reflect-metadata';
 import { interfaces, controller, httpPost } from 'inversify-express-utils';
-import { ApiPath, ApiOperationPost } from 'swagger-express-ts';
+import { ApiPath, ApiOperationPost } from '@inversify-cn/swagger-express-ts';
 import * as express from 'express';
 import { CarsService } from './cars.service';
 

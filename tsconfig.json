@@ -46,7 +46,7 @@
         // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */
         "typeRoots": [
             "node_modules/@types",
-            "node_modules/swagger-express-ts"
+            "node_modules/@inversify-cn/swagger-express-ts"
         ] /* List of folders to include type definitions from. */,
         //"types": [
         //    "express",
