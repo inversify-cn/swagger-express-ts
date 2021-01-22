@@ -3,7 +3,7 @@
     "publishConfig": {
         "access": "public"
     },
-    "version": "1.1.1",
+    "version": "1.1.2",
     "description": "Generate and serve swagger.json",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -53,6 +53,7 @@
         "@types/helmet": "0.0.37",
         "@types/inversify": "^2.0.33",
         "@types/lodash": "^4.14.109",
+        "await-exec": "^0.1.2",
         "body-parser": "^1.18.3",
         "compression": "^1.7.2",
         "express": "^4.16.4",
@@ -67,7 +68,6 @@
         "@types/mocha": "^2.2.48",
         "@types/sinon": "^4.3.3",
         "@types/supertest": "^2.0.10",
-        "await-exec": "^0.1.2",
         "chai": "^4.1.2",
         "gulp": "^4.0.0",
         "gulp-clean": "^0.4.0",
