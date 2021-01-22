@@ -361,6 +361,7 @@ export class SwaggerService {
   }
 
   public addApiModel(args: IApiModelArgs, target: any): any {
+    console.log("adding model: ", args, target)
     const definitionKey = target.name;
     let swaggerBuildDefinitionModel: ISwaggerBuildDefinitionModel = this
       .modelsMap[definitionKey];

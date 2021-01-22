@@ -3,6 +3,7 @@ import { SwaggerService } from './swagger.service';
 import * as assert from 'assert';
 import { build, ISwaggerBuildDefinition } from './swagger.builder';
 import { ISwagger } from './i-swagger';
+import * as modelGenerator from './model-generator';
 
 export interface ISwaggerExpressOptions {
   /**
@@ -15,6 +16,14 @@ export interface ISwaggerExpressOptions {
    * Swagger Definition.
    */
   definition?: ISwaggerBuildDefinition;
+
+  /**
+   * Specify which paths will be scanned to discover interfaces and
+   * convert them to models.
+   *
+   * The scanning process is slow, but will only run once per lifecycle.
+   */
+  interfaceScanPaths?: string[]
 }
 
 export function express(options?: ISwaggerExpressOptions): Router {
@@ -28,15 +37,17 @@ export function express(options?: ISwaggerExpressOptions): Router {
       build(options.definition);
     }
   }
-  const router = buildRouter(path);
+  const router = buildRouter(path, options.interfaceScanPaths || []);
+  modelGenerator.generateModelsOnlyOnce(options.interfaceScanPaths || []).then();
   return router;
 }
 
-function buildRouter(path: string): Router {
+function buildRouter(path: string, interfaceScanPaths: string[]): Router {
   const router: Router = Router();
   router.get(
     path,
-    (request: Request, response: Response, next: NextFunction) => {
+    async (request: Request, response: Response, next: NextFunction) => {
+      await modelGenerator.generateModelsOnlyOnce(interfaceScanPaths);
       const data: ISwagger = SwaggerService.getInstance().getData();
       response.json(data);
     },

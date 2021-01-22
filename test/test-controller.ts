@@ -25,7 +25,7 @@ export class TestController {
       },
     },
     responses: {
-      200: { description: 'success', model: 'HalRes' },
+      200: { description: 'success', model: 'IHalRes' },
     },
   })
   @httpPost('/post')
@@ -50,19 +50,8 @@ export class TestItem {
   public field2!: string;
 }
 
-// tslint:disable-next-line:max-classes-per-file
-@ApiModel({
-  name: 'Hal Response',
-})
-export class HalRes {
-  @ApiModelProperty({
-    type: SwaggerDefinitionConstant.OBJECT,
-  })
-  // tslint:disable-next-line:variable-name
-  public _links!: {};
+export interface IHalRes {
+  _links: {};
 
-  @ApiModelProperty({
-    type: SwaggerDefinitionConstant.STRING,
-  })
-  public field1!: string;
+  field1: string;
 }

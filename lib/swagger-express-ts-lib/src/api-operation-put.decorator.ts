@@ -1,13 +1,17 @@
 import { SwaggerService } from './swagger.service';
 import { IApiOperationArgsBase } from './i-api-operation-args.base';
-export interface IApiOperationPutArgs extends IApiOperationArgsBase {}
+import { addModel } from './model-generator';
+
+export interface IApiOperationPutArgs extends IApiOperationArgsBase {
+}
 
 export function ApiOperationPut(args: IApiOperationPutArgs): MethodDecorator {
-    return (
-        target: any,
-        propertyKey: string | symbol,
-        descriptor: PropertyDescriptor
-    ) => {
-        SwaggerService.getInstance().addOperationPut(args, target, propertyKey);
-    };
+  return (
+    target: any,
+    propertyKey: string | symbol,
+    descriptor: PropertyDescriptor,
+  ) => {
+    addModel(args);
+    SwaggerService.getInstance().addOperationPut(args, target, propertyKey);
+  };
 }
