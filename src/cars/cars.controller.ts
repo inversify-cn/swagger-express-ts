@@ -25,7 +25,6 @@ import { CarModel } from './car.model';
     security: { apiKeyHeader: [] },
 })
 @controller('/cars')
-@injectable()
 export class CarsController implements interfaces.Controller {
     constructor(@inject(CarsService.name) private carsService: CarsService) {}
 

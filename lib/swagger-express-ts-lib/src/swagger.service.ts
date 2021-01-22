@@ -169,7 +169,6 @@ export class SwaggerService {
   }
 
   public addPath(args: IApiPathArgs, target: any): void {
-    console.log('adding path: ', args, target);
     let currentController: IController = {
       path: args.path,
       name: args.name,
@@ -190,7 +189,6 @@ export class SwaggerService {
       this.controllerMap[target.name],
       currentController,
     );
-    console.log("added path = ", this.controllerMap);
   }
 
   public addOperationGet(
@@ -261,7 +259,6 @@ export class SwaggerService {
   }
 
   public buildSwagger(): void {
-    console.log("building swagger...");
     const data: ISwagger = _.cloneDeep(this.data);
     for (const controllerIndex in this.controllerMap) {
       const controller: IController = this.controllerMap[controllerIndex];
@@ -361,7 +358,6 @@ export class SwaggerService {
   }
 
   public addApiModel(args: IApiModelArgs, target: any): any {
-    console.log("adding model: ", args, target)
     const definitionKey = target.name;
     let swaggerBuildDefinitionModel: ISwaggerBuildDefinitionModel = this
       .modelsMap[definitionKey];
@@ -413,7 +409,6 @@ export class SwaggerService {
     let currentController: IController = {
       paths: {},
     };
-    console.log('adding operation: ', operation, args, target, propertyKey, this.controllerMap);
     for (const index in this.controllerMap) {
       const controller = this.controllerMap[index];
       if (index === target.constructor.name) {
@@ -423,14 +418,11 @@ export class SwaggerService {
 
     let currentPath: IPath;
     if (args.path && args.path.length > 0) {
-      console.log('adding paths...', currentController.paths);
       if (!currentController.paths[args.path]) {
         currentController.paths[args.path] = {} as IPath;
       }
       currentPath = currentController.paths[args.path];
       currentPath.path = args.path;
-
-      console.log('paths = ', currentPath);
     } else {
       if (!currentController.paths['/']) {
         currentController.paths['/'] = {} as IPath;
@@ -458,9 +450,7 @@ export class SwaggerService {
       currentPath.delete = this.buildOperation(args, target, propertyKey);
     }
 
-    console.log('current = ', currentPath, currentController);
     this.controllerMap[target.constructor.name] = currentController;
-    console.log('this map = ', this.controllerMap);
   }
 
   private buildOperation(

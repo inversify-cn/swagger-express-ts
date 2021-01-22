@@ -20,7 +20,6 @@ const expect = chai.expect;
 describe('SwaggerService', () => {
     beforeEach(() => {
         SwaggerService.getInstance().resetData();
-        console.log('reset');
     });
 
     describe('setBasePath', () => {

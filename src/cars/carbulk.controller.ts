@@ -10,7 +10,6 @@ import { CarsService } from './cars.service';
     path: '/cars-bulk',
 })
 @controller('/cars-bulk')
-@injectable()
 export class CarBulkController implements interfaces.Controller {
     constructor(@inject(CarsService.name) private carsService: CarsService) {}
 

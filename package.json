@@ -12,7 +12,7 @@
         "build:lib": "echo \"Building lib...\" && gulp build:lib",
         "build": "echo \"Building...\" && gulp build",
         "clean": "echo \"Cleaning...\" && gulp clean",
-        "test": "echo \"Testing...\" && npm run build && nyc mocha",
+        "test": "echo \"Testing...\" && npm run build && nyc mocha && jest",
         "dev": "echo \"Developing...\" && nodemon",
         "start": "echo \"Starting...\" && npm run build && ts-node --project tsconfig.json src/index.ts",
         "publish": "npm publish dist",
