@@ -4,6 +4,7 @@ import * as assert from 'assert';
 import { build, ISwaggerBuildDefinition } from './swagger.builder';
 import { ISwagger } from './i-swagger';
 import * as modelGenerator from './model-generator';
+import _ = require('lodash');
 
 export interface ISwaggerExpressOptions {
   /**
@@ -46,11 +47,11 @@ function buildRouter(path: string, interfaceScanPaths: string[]): Router {
   const router: Router = Router();
   router.get(
     path,
-    async (request: Request, response: Response, next: NextFunction) => {
+    _.memoize(async (request: Request, response: Response, next: NextFunction) => {
       await modelGenerator.generateModelsOnlyOnce(interfaceScanPaths);
       const data: ISwagger = SwaggerService.getInstance().getData();
       response.json(data);
-    },
+    }),
   );
   return router;
 }
