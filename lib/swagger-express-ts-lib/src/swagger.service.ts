@@ -53,6 +53,8 @@ interface IController {
 }
 
 export class SwaggerService {
+  private scanControllersOnlyOnce: ((data: ISwagger) => void);
+
   public static getInstance(): SwaggerService {
     if (!SwaggerService.instance) {
       const newSwaggerService: SwaggerService = new SwaggerService();
@@ -74,7 +76,7 @@ export class SwaggerService {
   }
 
   public getData(): ISwagger {
-    return _.cloneDeep(this.data);
+    return this.data;
   }
 
   public setBasePath(basePath: string): void {
@@ -260,6 +262,11 @@ export class SwaggerService {
 
   public buildSwagger(): void {
     const data: ISwagger = _.cloneDeep(this.data);
+    this.scanControllersOnlyOnce(data);
+    this.data = data;
+  }
+
+  private scanControllers(data: ISwagger) {
     for (const controllerIndex in this.controllerMap) {
       const controller: IController = this.controllerMap[controllerIndex];
       if (_.toArray(controller.paths).length > 0) {
@@ -305,15 +312,13 @@ export class SwaggerService {
           }
         }
       } else {
-        const swaggerPath: ISwaggerPath = {};
-        data.paths[controller.path] = swaggerPath;
+        data.paths[controller.path] = {};
       }
       data.tags.push({
         name: _.upperFirst(controller.name),
         description: controller.description,
       } as ISwaggerTag);
     }
-    this.data = data;
   }
 
   public addApiModelProperty(
@@ -398,6 +403,8 @@ export class SwaggerService {
       definitions: {},
       swagger: '2.0',
     };
+
+    this.scanControllersOnlyOnce = _.memoize(this.scanControllers, () => 'controllers').bind(this);
   }
 
   private addOperation(

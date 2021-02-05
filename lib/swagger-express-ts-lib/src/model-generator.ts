@@ -22,9 +22,7 @@ export function addModel(args: IApiOperationArgsBase) {
   }
 }
 
-export async function generateModelsOnlyOnce(interfaceScanPaths: string[]) {
-  return _.memoize(async () => generateModels(interfaceScanPaths))();
-}
+export const generateModelsOnlyOnce = _.memoize(generateModels);
 
 export async function generateModels(interfaceScanPaths: string[]) {
   const modelNamesToGenerate = modelNames.filter((elem, index, self) => index === self.indexOf(elem));
@@ -39,9 +37,11 @@ async function generateModelWithChildModels(modelName: any, interfaceScanPaths: 
 }
 
 async function getInterfaceProperties(interfaceName: string, interfaceScanPaths: string[]) {
-  const path = await findFileInterface(interfaceName, interfaceScanPaths);
-  return path ? getPropertiesFromFile(path, interfaceName, interfaceScanPaths) : [];
+  const path = await findFileInterfaceOnlyOnce(interfaceName, interfaceScanPaths);
+  return path ? getPropertiesFromFileOnlyOnce(path, interfaceName, interfaceScanPaths) : [];
 }
+
+const findFileInterfaceOnlyOnce = _.memoize(findFileInterface);
 
 async function findFileInterface(interfaceName: string, interfaceScanPaths: string[]) {
   for (const path of interfaceScanPaths) {
@@ -67,6 +67,8 @@ async function findFileInterface(interfaceName: string, interfaceScanPaths: stri
   }
   return undefined;
 }
+
+const getPropertiesFromFileOnlyOnce = _.memoize(getPropertiesFromFile, (path: string, interfaceName: string) => `${path}|${interfaceName}`);
 
 async function getPropertiesFromFile(path: string, interfaceName: string, interfaceScanPaths: string[]) {
   const replace = `export interface ${interfaceName} [^]*}`;

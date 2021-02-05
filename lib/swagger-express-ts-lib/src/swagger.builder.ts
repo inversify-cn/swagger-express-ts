@@ -8,10 +8,6 @@ import {
   IApiOperationArgsBaseResponse,
 } from './i-api-operation-args.base';
 
-export interface ISwaggerBuildDefinitionModelPropertyType {
-  type?: string | ISwaggerBuildDefinitionModelPropertyType;
-}
-
 export interface ISwaggerBuildDefinitionModelProperty {
   /**
    * Define type of property. Example: SwaggerDefinitionConstant.Definition.Property.Type.STRING
