@@ -217,7 +217,6 @@ describe('SwaggerService', () => {
                             format: undefined,
                         },
                     },
-                    required: [],
                     type: 'object',
                 },
             });
