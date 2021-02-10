@@ -28,6 +28,7 @@ export async function generateModels(interfaceScanPaths: string[]) {
   const modelNamesToGenerate = modelNames.filter((elem, index, self) => index === self.indexOf(elem));
   const promises = modelNamesToGenerate.map((name) => generateModelWithChildModels(name, interfaceScanPaths));
   await Promise.all(promises);
+
   SwaggerService.getInstance().setDefinitions(models);
 }
 
@@ -55,7 +56,6 @@ async function findFileInterface(interfaceName: string, interfaceScanPaths: stri
         }
         const file = output.split(':')[0];
         if (file) {
-          // console.log('FOUND FILE: ', file);
           return file;
         }
       } catch (err) {
@@ -126,12 +126,15 @@ async function interfacePropertyToModelProperty(interfaceName: string, interface
       if (!models[model.type]) {
         if (modelNamesGenerated.indexOf(model.type) === -1) {
           modelNamesGenerated.push(model.type);
+
           const properties = await getInterfaceProperties(model.type, interfaceScanPaths);
           await interfaceToModel(model.type, properties, interfaceScanPaths);
         }
       }
+
       model.model = model.type;
       model.type = 'object';
+
     } else {
       if (model.type === 'Date') {
         model.type = 'string';

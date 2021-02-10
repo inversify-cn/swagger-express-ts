@@ -116,7 +116,6 @@ export class SwaggerService {
       const newDefinition: ISwaggerDefinition = {
         type: SwaggerDefinitionConstant.Model.Type.OBJECT,
         properties: {},
-        required: [],
       };
       if (model.description) {
         newDefinition.description = model.description;
@@ -151,6 +150,9 @@ export class SwaggerService {
           }
         }
         if (property.required) {
+          if(!newDefinition.required){
+            newDefinition.required = []
+          }
           newDefinition.required.push(propertyIndex);
         }
         newDefinition.properties[propertyIndex] = newProperty;

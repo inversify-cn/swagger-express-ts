@@ -39,7 +39,6 @@ export function express(options?: ISwaggerExpressOptions): Router {
     }
   }
   const router = buildRouter(path, options.interfaceScanPaths || []);
-  modelGenerator.generateModelsOnlyOnce(options.interfaceScanPaths || []).then();
   return router;
 }
 
