@@ -33,4 +33,24 @@ describe('swagger e2e', () => {
     expect(res.body.definitions['Test Item']).toBeDefined();
     expect(res.body.definitions.IHalRes).toBeDefined();
   });
+
+  it('support dictionary type', async () => {
+    expect(app).toBeDefined();
+
+    const res = await request(app).get(`/api-docs/swagger.json`).send();
+    expect(res.body.definitions.DictionaryType).toBeDefined();
+    expect(res.body.definitions.DictionaryType).toStrictEqual({
+      'type': 'object',
+      'properties': {
+        'key': {
+          'type': 'object',
+          'description': 'key',
+          '$ref': '#/definitions/TestItem',
+        },
+      },
+      'required': [
+        'key',
+      ],
+    });
+  });
 });

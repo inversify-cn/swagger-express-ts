@@ -32,6 +32,25 @@ export class TestController {
   public async post(@requestBody() testItems: TestItem[]) {
     return `hello, world! length = ${testItems.length}`;
   }
+
+  @ApiOperationPost({
+    description: 'Test dictionary type',
+    summary: 'Test dictionary type',
+    path: '/post-dictionary',
+    parameters: {
+      body: {
+        model: 'DictionaryType',
+        type: SwaggerDefinitionConstant.OBJECT,
+      },
+    },
+    responses: {
+      200: { description: 'success', model: 'IHalRes' },
+    },
+  })
+  @httpPost('/post-dictionary')
+  public async postDictionary(@requestBody() dictionary: DictionaryType) {
+    return `hello, dictionary!`;
+  }
 }
 
 // tslint:disable-next-line:max-classes-per-file
@@ -54,4 +73,8 @@ export interface IHalRes {
   _links: {};
 
   field1: string;
+}
+
+export interface DictionaryType {
+  [key: string]: TestItem
 }

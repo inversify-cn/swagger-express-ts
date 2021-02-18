@@ -101,11 +101,22 @@ async function interfaceToModel(interfaceName: string, interfaceProperties: any,
   return;
 }
 
-async function interfacePropertyToModelProperty(interfaceName: string, interfaceProperty: any, interfaceScanPaths: string[]) {
+export function sanitize(interfaceProperty: any) {
+  return interfaceProperty.replace(';', '').split('//')[0].trim().replace(/^\[/, '').replace(/:\s*\w+\s*]\s*:/, ':');
+}
+
+export function parseProperty(interfaceProperty: any) {
+  const split = interfaceProperty.split(':');
+  const lhs = split[0];
+  const rhs = split[1].trim();
+
+  return [lhs, rhs];
+}
+
+export async function interfacePropertyToModelProperty(interfaceName: string, interfaceProperty: any, interfaceScanPaths: string[]) {
   try {
-    interfaceProperty = interfaceProperty.replace(';', '').split('//')[0].trim();
-    const propertyLeftSide = interfaceProperty.split(':')[0];
-    const propertyRightSide = interfaceProperty.split(':')[1].trim();
+    interfaceProperty = sanitize(interfaceProperty);
+    const [propertyLeftSide, propertyRightSide] = parseProperty(interfaceProperty);
 
     const propertyName = propertyLeftSide.replace('?', '');
     const isOptional = propertyLeftSide.indexOf('?') >= 0;
@@ -153,7 +164,7 @@ async function interfacePropertyToModelProperty(interfaceName: string, interface
 
     if (isIndexedObject) {
       models[interfaceName].type = 'object';
-    } else {
+    } else if (models[interfaceName] && models[interfaceName].properties) {
       models[interfaceName].properties[model.description] = model;
     }
 
