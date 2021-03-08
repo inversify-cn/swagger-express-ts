@@ -34,12 +34,12 @@ describe('swagger e2e', () => {
     expect(res.body.definitions.IHalRes).toBeDefined();
   });
 
-  it('support dictionary type', async () => {
+  it('supports dictionary type', async () => {
     expect(app).toBeDefined();
 
     const res = await request(app).get(`/api-docs/swagger.json`).send();
-    expect(res.body.definitions.DictionaryType).toBeDefined();
-    expect(res.body.definitions.DictionaryType).toStrictEqual({
+    expect(res.body.definitions.IDictionaryType).toBeDefined();
+    expect(res.body.definitions.IDictionaryType).toStrictEqual({
       'type': 'object',
       'properties': {
         'key': {
@@ -51,6 +51,24 @@ describe('swagger e2e', () => {
       'required': [
         'key',
       ],
+    });
+  });
+
+  it('supports dictionary type with nullable properties', async () => {
+    expect(app).toBeDefined();
+
+    const res = await request(app).get(`/api-docs/swagger.json`).send();
+    expect(res.body.definitions['TestItem | undefined']).toBeUndefined();
+    expect(res.body.definitions.IDictionaryTypeWithNullableProperties).toBeDefined();
+    expect(res.body.definitions.IDictionaryTypeWithNullableProperties).toStrictEqual({
+      'type': 'object',
+      'properties': {
+        'key': {
+          'type': 'object',
+          'description': 'key',
+          '$ref': '#/definitions/TestItem',
+        },
+      }
     });
   });
 });

@@ -1,4 +1,4 @@
-import { interfacePropertyToModelProperty, parseProperty, sanitize } from './model-generator';
+import { getPropertyType, interfacePropertyToModelProperty, parseProperty, sanitize } from './model-generator';
 import chai from 'chai';
 
 const expect = chai.expect;
@@ -13,6 +13,20 @@ describe('model generator', () => {
     it('sanitizes [key: string]: value', () => {
       const res = sanitize('[key: string]: value');
       expect(res).to.equal('key: value');
+    });
+  });
+
+  describe('getProperty type', () => {
+    it('gets from array[]', () => {
+      expect(getPropertyType('type[]')).to.equal('type');
+    });
+
+    it('gets from Array<>', () => {
+      expect(getPropertyType('Array<type>')).to.equal('type');
+    });
+
+    it('gets from type | undefined', () => {
+      expect(getPropertyType('type | undefined')).to.equal('type');
     });
   });
 
@@ -39,6 +53,16 @@ describe('model generator', () => {
         'description': 'key',
         'model': 'TestItem',
         'required': true,
+        'type': 'object',
+      });
+    });
+
+    it('[key: string]: TestItem | undefined', async () => {
+      const model = await interfacePropertyToModelProperty('IDictionaryTypeWithNullableProperties', `[key: string]: TestItem | undefined`, []);
+      expect(model).to.eql({
+        'description': 'key',
+        'model': 'TestItem',
+        'required': false,
         'type': 'object',
       });
     });

@@ -39,7 +39,7 @@ export class TestController {
     path: '/post-dictionary',
     parameters: {
       body: {
-        model: 'DictionaryType',
+        model: 'IDictionaryType',
         type: SwaggerDefinitionConstant.OBJECT,
       },
     },
@@ -48,8 +48,27 @@ export class TestController {
     },
   })
   @httpPost('/post-dictionary')
-  public async postDictionary(@requestBody() dictionary: DictionaryType) {
+  public async postDictionary(@requestBody() dictionary: IDictionaryType) {
     return `hello, dictionary!`;
+  }
+
+  @ApiOperationPost({
+    description: 'Test dictionary type with nullable properties',
+    summary: 'Test dictionary type with nullable properties',
+    path: '/post-dictionary-with-nullable-properties',
+    parameters: {
+      body: {
+        model: 'IDictionaryTypeWithNullableProperties',
+        type: SwaggerDefinitionConstant.OBJECT,
+      },
+    },
+    responses: {
+      200: { description: 'success', model: 'IHalRes' },
+    },
+  })
+  @httpPost('/post-dictionary-with-nullable-properties')
+  public async postDictionaryTypeWithNullableProperties(@requestBody() dictionary: IDictionaryTypeWithNullableProperties) {
+    return `hello, dictionary type with nullable properties`;
   }
 }
 
@@ -75,6 +94,10 @@ export interface IHalRes {
   field1: string;
 }
 
-export interface DictionaryType {
+export interface IDictionaryType {
   [key: string]: TestItem
+}
+
+export interface IDictionaryTypeWithNullableProperties {
+  [key: string]: TestItem | undefined
 }

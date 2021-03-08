@@ -113,14 +113,20 @@ export function parseProperty(interfaceProperty: any) {
   return [lhs, rhs];
 }
 
+export function getPropertyType(propertyRightSide: string) {
+  const arrayRemoved = propertyRightSide.replace('[]', '').replace('Array<', '').replace('>', '');
+  const [firstType] = arrayRemoved.split('| undefined');
+  return firstType.trim();
+}
+
 export async function interfacePropertyToModelProperty(interfaceName: string, interfaceProperty: any, interfaceScanPaths: string[]) {
   try {
     interfaceProperty = sanitize(interfaceProperty);
     const [propertyLeftSide, propertyRightSide] = parseProperty(interfaceProperty);
 
     const propertyName = propertyLeftSide.replace('?', '');
-    const isOptional = propertyLeftSide.indexOf('?') >= 0;
-    const propertyType = propertyRightSide.replace('[]', '').replace('Array<', '').replace('>', '') as string;
+    const isOptional = propertyLeftSide.indexOf('?') >= 0 || propertyRightSide.indexOf('| undefined') >= 0;
+    const propertyType = getPropertyType(propertyRightSide);
     const isArray = propertyRightSide.indexOf('[]') >= 0 || propertyRightSide.indexOf('Array<') >= 0;
     const isIndexedObject = propertyLeftSide.indexOf('[') >= 0;
     const isAny = propertyType.toLowerCase().indexOf('any') >= 0 || propertyType.toLowerCase().indexOf('{') >= 0;
